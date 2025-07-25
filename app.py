@@ -4,7 +4,7 @@ import numpy as np
 
 # ─── Page Setup ─────────────────────────────────────────────────────────────
 st.set_page_config(page_title="RFDS QLD B200 Landing Distance Calculator", layout="centered")
-st.title("🛬 RFDS QLD B200 King Air Landing Distance Calculator - NOT FOR OPERATIONAL USE")
+st.title("🛬 RFDS QLD B200 King Air Landing Distance Calculator GRASS - NOT FOR OPERATIONAL USE")
 
 # ─── Step 1: User Inputs ────────────────────────────────────────────────────
 col1, col2 = st.columns(2)
@@ -198,7 +198,7 @@ else:
     st.error("❌ Insufficient runway available for landing")
 
 
-st.markdown("### Data extracted from B200-601-228 HFG Perfomance Landing Distance w Propeller Reversing - Flap 100%")
+st.markdown("### Data extracted from B200-601-80 HFG Perfomance Landing Distance without Propeller Reversing - Flap 100%")
 
 
 st.markdown("Created by H Watson and R Thomas")

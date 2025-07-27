@@ -7,7 +7,7 @@ st.set_page_config(
     page_title="RFDS QLD B200 Landing Distance Calculator",
     layout="centered"
 )
-st.title("🛬 RFDS QLD B200 King Air Landing Distance Calculator - NOT FOR OPERATIONAL USE")
+st.title("🛬 RFDS QLD B200 King Air Landing Distance Calculator Unpaved - NOT FOR OPERATIONAL USE")
 
 # ─── Step 1: User Inputs ────────────────────────────────────────────────────
 col1, col2 = st.columns(2)

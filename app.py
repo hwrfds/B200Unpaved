@@ -66,9 +66,12 @@ def lookup_tbl2_interp(df, baseline, w):
     low  = wt_avail[wt_avail <= w_clip].max()
     high = wt_avail[wt_avail >= w_clip].min()
     wt_max    = wt_avail.max()
-    ref_rolls = df[wt_max].values
-    d_low     = df[low].values  - ref_rolls
-    d_high    = df[high].values - ref_rolls
+
+    # ← Sort rows by the 12500-lb (reference) roll so np.interp sees an ascending X
+    tbl       = df.sort_values(by=wt_max, ignore_index=True)
+    ref_rolls = tbl[wt_max].values
+    d_low     = tbl[low].values  - ref_rolls
+    d_high    = tbl[high].values - ref_rolls
 
     if low == high:
         curve = d_low
@@ -76,7 +79,14 @@ def lookup_tbl2_interp(df, baseline, w):
         frac  = (w_clip - low) / (high - low)
         curve = d_low + (d_high - d_low) * frac
 
-    delta = np.interp(baseline, ref_rolls, curve)
+    # ← now we can safely interp, with left/right extrapolation if needed
+    delta = np.interp(
+        baseline,
+        ref_rolls,
+        curve,
+        left=curve[0],
+        right=curve[-1]
+    )
     return baseline + float(delta)
 
 weight_adj = lookup_tbl2_interp(df2, baseline, weight)

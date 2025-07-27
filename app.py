@@ -128,19 +128,20 @@ df4 = (
     .reset_index(drop=True)
 )
 
-def lookup_tbl4_interp(df, refd):
-    # ensure the ground-roll column is sorted ascending
-    tbl       = df.sort_values(by=0, ignore_index=True)
-    ref_rolls = tbl[0].values
-    obs_vals  = tbl[50].values
-    # left/right to extrapolate cleanly outside your data range
-    return float(np.interp(
-        refd,
-        ref_rolls,
-        obs_vals,
-        left=obs_vals[0],
-        right=obs_vals[-1]
-    ))
+def lookup_tbl4_interp(df, ground_roll):
+    # sort by your ground-roll column
+    tbl        = df.sort_values(by=0, ignore_index=True)
+    rolls      = tbl[0].values         # ground-roll distances
+    obs_totals = tbl[50].values        # this is actually the *increment* to clear 50 ft
+
+    # compute the delta curve (increment)
+    deltas     = obs_totals - rolls
+
+    # interpolate that delta at your wind-adjusted roll
+    delta50    = np.interp(ground_roll, rolls, deltas)
+
+    # add it on to the ground roll
+    return float(ground_roll + delta50)
 
 obs50 = lookup_tbl4_interp(df4, wind_adj)
 st.markdown("### Step 4: 50 ft Obstacle Correction")

@@ -129,9 +129,18 @@ df4 = (
 )
 
 def lookup_tbl4_interp(df, refd):
-    ref_rolls = df[0].values
-    obs_vals  = df[50].values
-    return float(np.interp(refd, ref_rolls, obs_vals))
+    # ensure the ground-roll column is sorted ascending
+    tbl       = df.sort_values(by=0, ignore_index=True)
+    ref_rolls = tbl[0].values
+    obs_vals  = tbl[50].values
+    # left/right to extrapolate cleanly outside your data range
+    return float(np.interp(
+        refd,
+        ref_rolls,
+        obs_vals,
+        left=obs_vals[0],
+        right=obs_vals[-1]
+    ))
 
 obs50 = lookup_tbl4_interp(df4, wind_adj)
 st.markdown("### Step 4: 50 ft Obstacle Correction")

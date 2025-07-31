@@ -222,8 +222,18 @@ a1, a2 = st.columns(2)
 a1.write(f"**{avail_m:.0f} m**")
 a2.write(f"**{avail_ft:.0f} ft**")
 
+# Determine if tailwind exists (positive wind value)
+has_tailwind = wind > 0
+
+# Check if the 1.20 factor is selected
+using_1_2_factor = factor_label == "Approved Factor Dry (1.20)"
+
+# Go/No-Go Decision Logic
 st.markdown("### Go/No-Go Decision")
-if avail_ft >= sloped_ft:
+
+if using_1_2_factor and has_tailwind:
+    st.error("❌ Landing not permitted: 1.2 factoring selected with tailwind conditions")
+elif avail_ft >= sloped_ft:
     st.success("✅ Enough runway available for landing")
 else:
     st.error("❌ Insufficient runway available for landing")

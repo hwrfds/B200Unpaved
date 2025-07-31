@@ -232,7 +232,7 @@ using_1_2_factor = factor_label == "Approved Factor Dry (1.20)"
 st.markdown("### Go/No-Go Decision")
 
 if using_1_2_factor and has_tailwind:
-    st.error("❌ Landing not permitted: 1.2 factoring selected with tailwind conditions")
+    st.error("❌ Landing not permitted: No tailwind component permitted with 1.2")
 elif avail_ft >= sloped_ft:
     st.success("✅ Enough runway available for landing")
 else:

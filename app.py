@@ -223,7 +223,7 @@ a1.write(f"**{avail_m:.0f} m**")
 a2.write(f"**{avail_ft:.0f} ft**")
 
 # Determine if tailwind exists (positive wind value)
-has_tailwind = wind > 0
+has_tailwind = wind < 0
 
 # Check if the 1.20 factor is selected
 using_1_2_factor = factor_label == "Approved Factor Dry (1.20)"
